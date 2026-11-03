@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commit! – Protótipo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===================== CABEÇALHO ===================== -->
+<header class="topbar">
+  <div class="logo">Commit!</div>
+
+  <nav class="menu">
+    <button data-go="inicio">Início</button>
+    <button data-go="desafios">Desafios</button>
+    <button data-go="projetos">Projetos</button>
+    <button data-go="github">Entrega &amp; GitHub</button>
+  </nav>
+
+  <div class="conta">
+    <button class="ghost-link only-guest" data-go="login">Entrar</button>
+    <button class="btn-cta only-guest" data-go="cadastro">Criar conta</button>
+    <button class="avatar only-logged" data-go="perfil" aria-label="Meu perfil">AL</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== INÍCIO ===================== -->
+<section class="screen active" id="inicio">
+  <div class="intro">
+    <h1>Olá, <span id="saudacao">visitante</span></h1>
+    <p>Escolhemos algumas opções para você começar. Não precisa analisar todos os desafios.</p>
+  </div>
+
+  <div id="blocoContinuar"></div>
+
+  <div class="bloco">
+    <h2>Sugeridos para você</h2>
+    <p class="hint">Baseado no seu nível: <strong id="nivelHome"></strong></p>
+    <div class="grid" id="homeSugeridos"></div>
+  </div>
+
+  <div class="bloco">
+    <h2>Desafio da semana</h2>
+    <p class="hint">Um desafio escolhido pela curadoria, para manter o ritmo.</p>
+    <div class="grid" id="homeSemana"></div>
+  </div>
+
+  <div class="bloco">
+    <h2>Conquistas dos amigos</h2>
+    <div id="homeAmigos"></div>
+  </div>
+</section>
+
+<!-- ===================== LOGIN ===================== -->
+<section class="screen" id="login">
+  <div class="intro">
+    <h1>Acesse sua conta</h1>
+    <p>Entre para salvar seu progresso e desbloquear conquistas. Você pode explorar os desafios sem cadastro.</p>
+  </div>
+
+  <div class="card narrow">
+    <form id="formLogin">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" placeholder="seu@email.com" required>
+
+      <label for="senha">Senha</label>
+      <div class="pwd-wrap">
+        <input id="senha" type="password" placeholder="Digite sua senha" required>
+        <button type="button" id="btnOlho" class="pwd-toggle" data-act="olho">Mostrar</button>
+      </div>
+      <p class="hint">Ao tocar em Mostrar, a senha aparece por 3 segundos.</p>
+
+      <button class="btn block" type="submit">Entrar</button>
+    </form>
+
+    <div class="divider">ou entre com</div>
+    <div class="social">
+      <button class="btn ghost small" data-social="Google">Google</button>
+      <button class="btn ghost small" data-social="GitHub">GitHub</button>
+      <button class="btn ghost small" data-social="LinkedIn">LinkedIn</button>
+    </div>
+
+    <p class="center">
+      <a href="#" data-toast="Recuperação de senha (em breve)">Esqueci minha senha</a> ·
+      <a href="#" data-go="cadastro">Criar conta</a>
+    </p>
+  </div>
+</section>
+
+<!-- ===================== CADASTRO + ONBOARDING ===================== -->
+<section class="screen" id="cadastro">
+  <div class="intro">
+    <h1>Crie sua conta</h1>
+    <p>Leva menos de dois minutos. Com 3 perguntas, montamos sua trilha de desafios.</p>
+  </div>
+
+  <div class="card narrow">
+    <div class="steps">
+      <span id="st1" class="on">1. Objetivo</span>
+      <span id="st2">2. Nível</span>
+      <span id="st3">3. Interesses</span>
+    </div>
+
+    <div id="ob1">
+      <h2>Qual é o seu objetivo?</h2>
+      <p class="hint">Escolha o que mais combina com você agora.</p>
+      <label class="radio"><input type="radio" name="obj" value="portfolio" checked> Montar portfólio</label>
+      <label class="radio"><input type="radio" name="obj" value="estudo"> Estudar um tema específico</label>
+      <label class="radio"><input type="radio" name="obj" value="carreira"> Preparar para vaga de estágio</label>
+      <label class="radio"><input type="radio" name="obj" value="projeto"> Criar um projeto pessoal</label>
+    </div>
+
+    <div id="ob2" hidden>
+      <h2>Qual é o seu nível atual?</h2>
+      <p class="hint">Responda com sinceridade. Você pode mudar depois.</p>
+      <label for="nivel-ob">Autoavaliação</label>
+      <select id="nivel-ob">
+        <option value="Iniciante">Iniciante: sei lógica básica e uma linguagem</option>
+        <option value="Intermediário">Intermediário: já fiz projetos pequenos</option>
+        <option value="Avançado">Avançado: construo apps completos</option>
+      </select>
+    </div>
+
+    <div id="ob3" hidden>
+      <h2>Quais temas interessam a você?</h2>
+      <p class="hint">Marque uma ou mais trilhas.</p>
+      <label class="check"><input type="checkbox" checked> Front-end</label>
+      <label class="check"><input type="checkbox"> SaaS</label>
+      <label class="check"><input type="checkbox"> CMS</label>
+      <label class="check"><input type="checkbox"> HRM</label>
+      <label class="check"><input type="checkbox"> Jogos</label>
+      <label for="horas">Horas por semana</label>
+      <select id="horas">
+        <option>Até 2h</option><option selected>De 2h a 5h</option><option>Mais de 5h</option>
+      </select>
+    </div>
+
+    <div class="row space">
+      <button class="btn ghost" id="btnVoltar" data-act="voltar" disabled>Voltar</button>
+      <button class="btn" id="btnAvancar" data-act="avancar">Avançar</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DESAFIOS ===================== -->
+<section class="screen" id="desafios">
+  <div class="intro">
+    <h1>Explorar desafios</h1>
+    <p>Projetos com escopo fechado, organizados por trilha e nível. Use os filtros para achar o desafio certo para você agora.</p>
+  </div>
+
+  <div class="card">
+    <div class="filters" id="filtros">
+      <div><label for="fNivel">Nível</label>
+        <select id="fNivel"><option value="">Todos</option><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div>
+      <div><label for="fTrilha">Trilha</label>
+        <select id="fTrilha"><option value="">Todas</option><option>Front-end</option><option>SaaS</option><option>CMS</option><option>HRM</option><option>Jogos</option></select></div>
+      <div><label for="fTec">Tecnologia</label>
+        <select id="fTec"><option value="">Todas</option><option>HTML</option><option>CSS</option><option>JavaScript</option><option>React</option><option>Node.js</option><option>Python</option></select></div>
+      <div><label for="fTempo">Tempo estimado</label>
+        <select id="fTempo"><option value="">Qualquer</option><option value="curto">Até 6h</option><option value="medio">6h a 16h</option><option value="longo">Mais de 16h</option></select></div>
+      <div><label for="fStatus">Status</label>
+        <select id="fStatus"><option value="">Todos</option><option>Não iniciado</option><option>Em andamento</option><option>Concluído</option></select></div>
+    </div>
+  </div>
+
+  <p class="count" id="contagem"></p>
+  <div class="grid" id="listaDesafios"></div>
+</section>
+
+<!-- ===================== DETALHE ===================== -->
+<section class="screen" id="detalhe">
+  <p><a href="#" data-go="desafios">← Voltar para os desafios</a></p>
+  <div class="card" id="detalheConteudo"></div>
+</section>
+
+<!-- ===================== PROJETOS ===================== -->
+<section class="screen" id="projetos">
+  <div class="intro">
+    <h1>Projetos</h1>
+    <p>Acompanhe o que você começou e o que já concluiu.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="andamento">Em andamento</button>
+    <button class="tab" data-tab="concluidos">Concluídos</button>
+  </div>
+
+  <div class="grid" id="listaProjetos"></div>
+</section>
+
+<!-- ===================== PERFIL ===================== -->
+<section class="screen" id="perfil">
+  <div class="intro">
+    <h1>Meu perfil</h1>
+    <p>Você escolhe o que os amigos veem. O padrão é privado.</p>
+  </div>
+
+  <div class="card narrow">
+    <div class="row">
+      <div class="avatar big">AL</div>
+    </div>
+
+    <label for="pNome">Nome</label>
+    <input id="pNome" value="Aluno exemplo">
+
+    <label for="pDeco">Decoração do perfil</label>
+    <select id="pDeco">
+      <option value="nenhuma">Nenhuma</option>
+      <option value="estrela">Estrela</option>
+      <option value="bolinha">Bolinhas</option>
+    </select>
+
+    <label class="check"><input type="checkbox" id="pVisivel"> Mostrar minhas conquistas aos amigos</label>
+
+    <div class="row space" style="margin-top:16px">
+      <button class="btn" data-act="salvarPerfil">Salvar perfil</button>
+      <button class="btn ghost" data-act="sair">Sair da conta</button>
+    </div>
+  </div>
+
+  <div class="card narrow">
+    <h2>Conquistas</h2>
+    <div id="listaConquistas"></div>
+  </div>
+</section>
+
+<!-- ===================== ENTREGA & GITHUB ===================== -->
+<section class="screen" id="github">
+  <div class="intro">
+    <h1>Entrega &amp; GitHub</h1>
+    <p>Siga os passos para enviar o seu projeto. Marque cada item conforme concluir.</p>
+    <p class="hint" id="gitProjeto"></p>
+  </div>
+
+  <div class="card">
+    <h2>1. Criar o repositório</h2>
+    <label class="check"><input type="checkbox"> Criei o repositório com um nome descritivo (ex.: <code>commit-lista-tarefas</code>)</label>
+    <label class="check"><input type="checkbox"> Escolhi a visibilidade (público ou privado)</label>
+    <label class="check"><input type="checkbox"> Adicionei o README.md na raiz</label>
+  </div>
+
+  <div class="card">
+    <h2>2. Repositório privado</h2>
+    <p class="hint">Se o repositório for privado, o avaliador não consegue ver o código sem convite.</p>
+    <label class="check"><input type="checkbox"> Adicionei o avaliador como colaborador (Settings → Collaborators)</label>
+    <label class="check"><input type="checkbox"> Confirmei que o convite foi aceito</label>
+  </div>
+
+  <div class="card">
+    <h2>3. Documentação no GitHub</h2>
+    <p class="hint">Estrutura recomendada:</p>
+<pre class="diagram">commit-projeto/
+├── README.md        ← objetivo, como rodar, prints
+├── CHANGELOG.md     ← o que mudou em cada versão
+├── docs/            ← diagramas, decisões técnicas
+│   └── decisoes.md
+└── src/             ← código-fonte</pre>
+    <label class="check"><input type="checkbox"> README com objetivo e instruções para rodar</label>
+    <label class="check"><input type="checkbox"> Pasta /docs com decisões técnicas</label>
+    <label class="check"><input type="checkbox"> CHANGELOG atualizado no último commit</label>
+  </div>
+
+  <div class="card">
+    <h2>4. Envio final</h2>
+    <label class="check"><input type="checkbox"> Link do repositório colado na plataforma</label>
+    <label class="check"><input type="checkbox"> Último commit identificado com mensagem clara</label>
+    <button class="btn" style="margin-top:12px" data-toast="Projeto enviado (simulação)">Enviar projeto</button>
+  </div>
+</section>
+
+<!-- ===================== MODELO DE DADOS ===================== -->
+<section class="screen" id="modelo">
+  <div class="intro">
+    <h1>Modelo de dados: Desafio</h1>
+    <p>Mapeamento em formato de diagrama de classe, com atributos, ações e classes associadas.</p>
+  </div>
+<pre class="diagram">┌───────────────────────────────┐
+│           Desafio             │
+├───────────────────────────────┤
+│ id                            │
+│ titulo                        │
+│ resumo                        │
+│ nivel  (Iniciante/Int./Avanç.)│
+│ trilha (Front-end, SaaS...)   │
+│ tempoEstimado                 │
+│ tecnologias[]                 │
+│ habilidades[]                 │
+│ preRequisitos[]               │
+│ entregaveis[]                 │
+│ totalConclusoes               │
+│ mediaAvaliacao                │
+├───────────────────────────────┤
+│ salvar() / remover()          │
+│ iniciar()                     │
+│ marcarItemConcluido()         │
+│ avaliar(nota, comentario)     │
+│ abrirTroubleshooting()        │
+└───────────────────────────────┘
+
+Associações:
+  Trilha ─1..N─ Desafio
+  Usuario ─N..N─ Desafio  (via Progresso: status, checklist, dataInicio)
+  Desafio ─1..N─ Avaliacao
+  Desafio ─1..N─ Recurso          (guia, tutorial, referência)
+  Desafio ─1..N─ Troubleshooting  (problema, causa, solução)
+  Desafio ─1..N─ ProjetoComunidade (votos)
+  Desafio ─1..N─ Gabarito         (cadastrado pelo professor)</pre>
+</section>
+
+</main>
+
+<footer>
+  <p>Ao usar o Commit!, você concorda com os
+    <a href="#" data-toast="Termos de Uso (em breve)">Termos de Uso</a> e a
+    <a href="#" data-toast="Política de Privacidade (em breve)">Política de Privacidade</a>.</p>
+  <p>Protótipo acadêmico · Commit! · <a href="#" data-go="modelo">Modelo de dados</a></p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
